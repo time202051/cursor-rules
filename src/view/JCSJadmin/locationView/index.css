@@ -1,0 +1,98 @@
+.location250424 {
+  display: flex;
+}
+.roadway250424 {
+  padding:10px;
+  /* display: flex; */
+}
+.view250424 {
+  /* display: flex; */
+  
+  padding: 10px 10px 10px 80px;
+  .head250425 {
+    display: flex;
+    .div250425 {
+      /* border:1px solid #333; */
+        margin:1px;
+        width: 50px;
+        font-size: 12px;
+        text-align: center;
+    }
+  }
+  .floor250424 {
+    position: relative;
+    .lthead250425{
+      width: 40px;
+      height: 20px;
+      position: absolute;
+      left:-40px;
+      text-align: center;
+      font-size: 12px;
+      line-height: 20px;
+      /* top:0px; */
+    }
+    .pai250425 {
+      position: absolute;
+      top:47%;
+      left:-70px;
+      writing-mode: vertical-rl; /* 文字从上到下，从右到左排列 */
+    }
+    .layer250424 {
+      display: flex;
+      .col250424 {
+        display: flex;
+        border:1px solid #333;
+        margin:1px;
+        width: 50px;
+        height: 20px;
+        .cols250424 {
+          font-size: 10px;
+          position: relative;
+          /* width:40px; */
+          height: 18px;
+          
+        }
+        .cols250424::after {
+          position: absolute;
+          content: "";
+          display: block;
+          width: 1px;
+          height: 10px;
+          border-right: 1px dashed #333;
+          top: 5px;
+          right: 0px;
+        }
+        .cols250424:last-child::after {
+          display: none;
+        }
+        .load250425 {
+          background-color: rgb(153, 204, 102);
+        }
+        .use250425 {
+          background-color: #FFBC52;
+        }
+        .enabled250425 {
+          background-color: #FF6347;
+        }
+      }
+    }
+  }
+  .left25042401 {
+    display: flex;
+    flex-direction: column-reverse;
+    width: 200px;
+    .lthead250425{
+      width: 40px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+    .layer250424 {
+      .col250424 {
+        flex-shrink: 0;
+        width: 50px;
+      }
+    }
+    
+  }
+  
+}

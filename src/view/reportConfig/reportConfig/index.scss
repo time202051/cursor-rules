@@ -1,0 +1,45 @@
+ /* 拖拽相关样式 */
+    /*包围div样式*/
+    .box {
+        width: 100%;
+        overflow: hidden;
+        //box-shadow: -1px 9px 10px 12px rgba(0, 0, 0, 0.11);
+        height: calc(100vh - 120px);
+    }
+    /*左侧div样式*/
+    .left {
+        width: calc(15% - 10px);  /*左侧初始化宽度*/
+        height: 100%;
+        background: #FFFFFF;
+        float: left;
+        overflow: hidden;
+      border-right: 1px solid #ccc;
+    }
+    /*拖拽区div样式*/
+    .resize {
+        cursor: col-resize;
+        float: left;
+        position: relative;
+        top: 45%;
+        background-color: #d6d6d6;
+        border-radius: 5px;
+        margin-top: 2px;
+        height: 36px;
+        background-size: cover;
+        background-position: center;
+        /*z-index: 99999;*/
+        font-size: 24px;
+        color: white;
+    }
+    /*拖拽区鼠标悬停样式*/
+    .resize:hover {
+        color: #444444;
+    }
+    /*右侧div'样式*/
+    .mid {
+        float: left;
+        width: 85%;   /*右侧初始化宽度*/
+        height: 100%;
+        background: #fff;
+        box-shadow: -1px 4px 5px 3px rgba(0, 0, 0, 0.11);
+    }

@@ -1,0 +1,122 @@
+<template>
+  <div>
+    <FormSearch
+      :form-search-data="formSearchData"
+      @handleSearch="handleSearch"
+      @handleReset="handleReset"
+    />
+    <MyTable
+      :paginations="paginations"
+      :btnlist="this.hasBtn(this)"
+      :empty-img="tableData.emptyImg"
+      :table-data="tableData"
+      :multiple-selection="multipleSelection"
+      @SelectionChange="SelectionChange"
+      @handleSizeChange="handleSizeChange"
+      @handleindexChange="handleindexChange"
+    />
+    <dialogTemplate :form="form"> </dialogTemplate>
+  </div>
+</template>
+
+<script>
+import { Basic } from "@/api/request/swagger";
+import minxin from "./index.js";
+export default {
+  name: "channelMasterFileManagement",
+  mixins: [minxin],
+  data() {
+    return {
+      multipleSelection: [],
+    };
+  },
+  mounted() {
+    this.getTable();
+
+  },
+  methods: {
+    getTable() {
+      this.get({
+        url: Basic.getDepthChannelList,
+        isLoading: true,
+        data: Object.assign(this.formSearchData.value, {
+          Page: this.paginations.page,
+          MaxResultCount: this.paginations.limit,
+        }),
+      }).then((res) => {
+        this.tableData.rows = res.result.items;
+        this.paginations.total = res.result.totalCount;
+        this.tableData.emptyImg = true;
+      });
+    },
+    SelectionChange(row) {
+      this.multipleSelection = row;
+    },
+    handleSearch(from) {
+      var self = this;
+      self.formSearchData.value = { ...from };
+      self.paginations.page = 1;
+      this.getTable();
+    },
+    handleReset() {},
+    handleSizeChange(val) {
+      this.paginations.page = 1;
+      this.paginations.limit = val;
+      this.getTable();
+    },
+    handleindexChange(val) {
+      this.paginations.page = val;
+      this.getTable();
+    },
+    // 编辑
+    update() {
+      const data = this.multipleSelection;
+      if (data.length == 0 || data.length > 1) {
+        return this.$message.info("请选择一条数据");
+      }
+      this.form.requestData.flage = "update";
+      this.form.dialogFormVisible = true;
+      this.form.title = "编辑多深度通道";
+      this.form.value = {
+        code: data[0].code,
+        depthWayName: data[0].depthWayName,
+        wayInSort: data[0].wayInSort,
+        wayOutSort: data[0].wayOutSort,
+        enabled: data[0].enabled,
+        remark: data[0].remark,
+        id: data[0].id,
+      };
+    },
+    // 创建
+    create() {
+      this.form.dialogFormVisible = true;
+      this.form.requestData.flage = "add";
+      this.form.title = "新增多深度通道";
+      this.form.value = {
+        code: "",
+        depthWayName: "",
+        wayInSort: "",
+        wayOutSort: "",
+        enabled: true,
+        remark: "",
+      };
+    },
+    // 导出按钮
+    export() {
+      this.post({
+        url: Basic.exportDepthChannel,
+        isLoading: true,
+        responseType: "blob",
+        data: Object.assign(this.formSearchData.value, {
+          Page: this.paginations.page,
+          MaxResultCount: this.paginations.limit,
+        }),
+      }).then((res) => {
+        this.fnexsl(res); // fnexsl封装的导出方法
+      });
+    },
+  },
+};
+</script>
+
+<style></style>

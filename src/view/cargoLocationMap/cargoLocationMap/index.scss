@@ -1,0 +1,123 @@
+.header {
+  border-bottom: 1px #ccc solid;
+  height: 50px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0px 20px;
+  box-sizing: border-box;
+}
+
+.headerBox {
+  display: flex;
+}
+
+.headerBox div {
+  border: 1px solid #ccc;
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.headerBoxItemClass {
+  background: #99ddff;
+
+}
+
+/*
+货位图样式
+ */
+.mapBox {
+  //padding: 10px;
+  //box-sizing: border-box;
+}
+
+.roadWayCode {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-around;
+}
+
+.roadWayCodeBox {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+}
+
+.roadWayCodeItem {
+  //width: 50px;
+  //height: 50px;
+  //border: 1px solid #ccc;
+  //margin: 3px;
+}
+
+.codeFlage {
+  width: 100%;
+  height: 100%;
+}
+
+.top {
+
+  width: 100%;
+  height: 50%;
+}
+
+.bottom {
+  width: 100%;
+  height: 50%;
+  background: #24da70;
+}
+
+.roadway {
+  width: 100px;
+  height: 100%;
+}
+
+.roadway0 {
+  display: flex;
+  margin-left: 30px;
+  //justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.roadway0Item {
+  width: 30px;
+  //height: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+  //margin: 2px;
+  margin-left: 4px;
+  position: relative;
+}
+
+.boxitem {
+  width: 30px;
+  height:30px;
+  border: 1px solid #ccc;
+  //margin-top: 3px;
+  font-size: 14px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.scaleX{
+  position: relative;
+  box-sizing: border-box;
+  margin-left: 4px;
+}
+.scaleXItem{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: red;
+}
+
