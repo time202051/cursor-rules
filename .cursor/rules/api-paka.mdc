@@ -1,0 +1,58 @@
+---
+alwaysApply: true
+---
+这是vue2项目
+
+项目的接口会上传到swagger中，我下载好swagger.json保存在了swagger/swagger.json文件里面了。
+后续联调接口时候我给你接口地址你去这个文件里面吧入参，返回参数，请求方式等都按照swagger.json返回的格式对接下
+
+项目的api接口返回的结构是后端自定义的，下面我将复制一些接口的成功失败情况的接口数据，好让你知道如何拿到里面的数据
+
+接口成功的（code等于200）
+1.这是分页接口的结构
+{
+    "code": 200,
+    "success": true,
+    "error": null,
+    "result": {
+        "totalCount": 1,
+        "items": [
+            {
+                "id": "8f8b6d07-890c-fbce-020b-3a1e805ac93a",
+                "stockOutBillNo": "YCKDD003",
+                "sourceNo": "YCKDD003",
+                "pickTaskCode": "JH757411271774277",
+                "lackStatus": false,
+            }
+        ]
+    }
+}
+
+2.
+{
+    "code": 200,
+    "success": true,
+    "error": null,
+    "result": []
+}
+
+接口失败的（code不等于200，且一定会返回error.message，项目拦截器中会自动出发报错信息提示框，所以不需要手动再添加报错信息）
+1.{
+    "code": 500,
+    "success": false,
+    "error": {
+        "code": "500",
+        "message": "起始点位不正确！1",
+        "details": null,
+        "data": {},
+        "validationErrors": null
+    },
+    "result": null
+}
+
+项目中接口调用有两种方式
+方式1：项目中直接 this.post， this.get
+方式2：src/api/modules下的接口是我通过脚本生成的所有接口直接调用传参就好。后端如果更新接口部署到swagger上我要执行npm init http://xxxx/swagger.json这个地址来更新就能拿到最新的了。然后项目中用的时候直接就  getApidescription(params)这样使用。这是推荐的方式。后续你调用接口时候都用这种方式，如果找不到相关的接口再用方式1
+
+
+
