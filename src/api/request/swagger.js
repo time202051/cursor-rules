@@ -155,7 +155,7 @@ export const StockOut = {
   outOrderExport: `${baseURL}/api/app/stock-out/export-stock`, // 导出 - 出库订单
   outOrderDetailPages: `${baseURL}/api/app/stock-out/stock-out-detail-pages`, // 分页数据（详情） - 出库订单
   pickTaskExport: `${baseURL}/api/app/stock-out/export-wave-pick-task`, // 导出 - 拣货任务管理
-  stockOutAndPickInfo: `${baseURL}/api/app/stock-out/stock-out-and-pick-info`, // 出库订单任务 
+  stockOutAndPickInfo: `${baseURL}/api/app/stock-out/stock-out-and-pick-info`, // 出库订单任务
   pickInfoExport: `${baseURL}/api/app/stock-out/export-stock-out-and-pick-info`, //出库订单任务  导出
 }
 
@@ -172,7 +172,7 @@ export const StockIn = {
   arrivalGoodsAddDetail: `${baseURL}/api/app/stock-in/stock-in-detail`, // 增行 - 创建 - 到货通知单
   arrivalDetailPages: `${baseURL}/api/app/stock-in/stock-in-detail-pages`, // 分页数据（详情） - 到货通知单
   exportArriveDetail: `${baseURL}/api/app/stock-in/export-stock-out`, // 导出（详情） - 到货通知单
-  productLackPages: `${baseURL}/api/app/product-lack/product-lack-pages`, // 零件缺料信息分页查询 
+  productLackPages: `${baseURL}/api/app/product-lack/product-lack-pages`, // 零件缺料信息分页查询
   productLackPagesExport: `${baseURL}/api/app/product-lack/export-product-lack-pages` // 零件缺料信息  导出
 }
 
@@ -497,7 +497,7 @@ export const Reserve = {
 
   boxQuality: `${baseURL}/api/app/test-back/cp-box-quality`, // 更新成品质检信息
 
-  
+
 
 
 }
@@ -539,7 +539,7 @@ export const Inventory = {
   getInventoryOrderDetailBoxNos: `${baseURL}/api/app/i-lT/i-lTDetail-package-pages`, // 明细中的箱号数据展示 - 盘点单
   getInventoryRecordList: `${baseURL}/api/app/i-lT/check-record-pages`, // 分页数据 - 盘点记录
   exportInventoryRecord: `${baseURL}/api/app/i-lT/export-check-record`, // 导出 - 盘点记录
-  exportiLTPlan: `${baseURL}/api/app/i-lT/export-iLTPlan`  // 导出 -盘点计划导出 
+  exportiLTPlan: `${baseURL}/api/app/i-lT/export-iLTPlan`  // 导出 -盘点计划导出
 }
 
 // 统计

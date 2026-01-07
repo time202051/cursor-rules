@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { Basic } from "@/api/request/swagger";
+import { Basic, warehouse } from "@/api/request/swagger";
 import createTemplate from "./from/create/index.vue";
 import minxin from "./index.js";
 export default {
@@ -49,8 +49,6 @@ export default {
   mounted() {
     this.getTable();
     this.getSelect();
-
-
   },
   data() {
     return {
@@ -192,7 +190,7 @@ export default {
       this.form.requestData.flage = "update";
       this.form.dialogFormVisible = true;
       this.form.title = "编辑库位";
-      this.form.value = { ...data[0]};
+      this.form.value = { ...data[0] };
     },
     // 创建
     create() {
@@ -228,44 +226,44 @@ export default {
     // 强制呼出
     takeOutBtn() {
       let data = this.multipleSelection;
-      if (data.length == 0 || data.length > 1)  return this.$message.info("请选择一条数据");
+      if (data.length == 0 || data.length > 1)
+        return this.$message.info("请选择一条数据");
       this.takeOutForm.dialogFormVisible = true;
       this.takeOutForm.requestData.flage = "add";
       this.takeOutForm.value = {
-        startCode:data[0].warehouseLocationCode,
+        startCode: data[0].warehouseLocationCode,
         endCode: "",
       };
     },
-     // 批量释放
+    // 批量释放
     batchFreeBtn() {
-       let data = this.multipleSelection;
-       if (data.length == 0  ) return this.$message.info("请选择至少一条数据");
-       this.post({
-            url: Basic.batchfreePoint,
-            data: {
-              pointCodes: data.map(i=>i.warehouseLocationCode)
-            }
-          }).then((res) => {
-            this.getTable();
-            this.$message.success("操作成功");
-          });
+      let data = this.multipleSelection;
+      if (data.length == 0) return this.$message.info("请选择至少一条数据");
+      this.post({
+        url: Basic.batchfreePoint,
+        data: {
+          pointCodes: data.map((i) => i.warehouseLocationCode),
+        },
+      }).then((res) => {
+        this.getTable();
+        this.$message.success("操作成功");
+      });
     },
-     // 批量设置库位
+    // 批量设置库位
     upLocationBtn() {
-       let data = this.multipleSelection;
-       if (data.length == 0  ) return this.$message.info("请选择至少一条数据");
-       this.upLocationForm.dialogFormVisible = true;
+      let data = this.multipleSelection;
+      if (data.length == 0) return this.$message.info("请选择至少一条数据");
+      this.upLocationForm.dialogFormVisible = true;
       this.upLocationForm.requestData.flage = "add";
       this.upLocationForm.value = {
-         locationType: 0,
-         list:data.map(item => {
-           return {
-             cargoLocationId: item.id,
-             cargoLocationCode: item.warehouseLocationCode
-           }
-         })
+        locationType: 0,
+        list: data.map((item) => {
+          return {
+            cargoLocationId: item.id,
+            cargoLocationCode: item.warehouseLocationCode,
+          };
+        }),
       };
-      
     },
     // 导出按钮
     export() {
@@ -280,6 +278,29 @@ export default {
       }).then((res) => {
         this.fnexsl(res); //fnexsl封装的导出方法
       });
+    },
+    delete() {
+      let data = this.multipleSelection;
+      if (data.length != 1) return this.$message.info("请选择一条数据");
+      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.del({
+            url: warehouse.cargoLocation + "/" + data[0].id,
+          }).then((res) => {
+            this.getTable();
+            this.$message.success("删除成功");
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
     },
   },
 };

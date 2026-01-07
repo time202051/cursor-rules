@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { Basic } from "@/api/request/swagger";
+import { Basic, warehouse } from "@/api/request/swagger";
 import minxin from "./index.js";
 export default {
   name: "workbenchManagement",
@@ -29,7 +29,6 @@ export default {
   mounted() {
     this.getTable();
     this.getSelect();
-
   },
   data() {
     return {
@@ -85,11 +84,11 @@ export default {
       this.getTable();
     },
     //释放工作台
-    free(){
+    free() {
       let data = this.multipleSelection;
       if (data.length == 0 || data.length > 1)
-        return this.$message.info("请选择一条数据")
-        this.$confirm("此操作将释放该工作台, 是否继续?", "提示", {
+        return this.$message.info("请选择一条数据");
+      this.$confirm("此操作将释放该工作台, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
@@ -156,6 +155,29 @@ export default {
       }).then((res) => {
         this.fnexsl(res); //fnexsl封装的导出方法
       });
+    },
+    delete() {
+      let data = this.multipleSelection;
+      if (data.length != 1) return this.$message.info("请选择一条数据");
+      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.del({
+            url: warehouse.handleWorkBench + "/" + data[0].id,
+          }).then((res) => {
+            this.getTable();
+            this.$message.success("删除成功");
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
     },
   },
 };

@@ -175,6 +175,7 @@
           v-if="tableData.operates && tableData.operates.length > 0"
           label="操作"
           align="center"
+          fixed
         >
           <template slot-scope="scope">
             <div class="operate-group">

@@ -48,7 +48,7 @@
   </div>
 </template>
 <script>
-import { Basic } from "@/api/request/swagger";
+import { Basic, warehouse } from "@/api/request/swagger";
 import minxin from "./index.js";
 import JsBarcode from "jsbarcode";
 import printTemplate from "./print/index.vue";
@@ -58,7 +58,6 @@ export default {
   mounted() {
     this.getTable();
     this.getSelect();
-
   },
   components: { printTemplate },
   data() {
@@ -219,6 +218,29 @@ export default {
       }).then((res) => {
         this.fnexsl(res); //fnexsl封装的导出方法
       });
+    },
+    delete() {
+      let data = this.multipleSelection;
+      if (data.length != 1) return this.$message.info("请选择一条数据");
+      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.del({
+            url: warehouse.container + "/" + data[0].id,
+          }).then((res) => {
+            this.getTable();
+            this.$message.success("删除成功");
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
     },
   },
 };

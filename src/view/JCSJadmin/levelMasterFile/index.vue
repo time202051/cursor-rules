@@ -27,7 +27,7 @@ import { warehouse, PublicAggregate, Point } from "@/api/request/swagger";
 import minxin from "./index.js";
 // import importExsl from "./from/importExsl/index.vue"
 export default {
-  name: 'levelMasterFileManagement',
+  name: "levelMasterFileManagement",
   mixins: [minxin],
   mounted() {
     this.getTable();
@@ -35,16 +35,16 @@ export default {
     // this.getSelect();
     // console.log(this.hasBtn(this));
   },
-//   components:{importExsl},
+  //   components:{importExsl},
   data() {
     return {
-    //   UploadFrom: {
-    //     dialogFormVisible: false,
-    //   },
-    //   importform:{
-    //      dialogFormVisible: false,
-    //      url: Point.importPointArea
-    //   },
+      //   UploadFrom: {
+      //     dialogFormVisible: false,
+      //   },
+      //   importform:{
+      //      dialogFormVisible: false,
+      //      url: Point.importPointArea
+      //   },
       multipleSelection: [],
     };
   },
@@ -64,7 +64,7 @@ export default {
       });
     },
     // getSelect() {
-      //所属工位下拉
+    //所属工位下拉
     //   this.get({
     //     url: Point.stationSelect,
     //     isLoading: false,
@@ -83,7 +83,6 @@ export default {
     //     });
     //   });
 
-    
     // },
     SelectionChange(row) {
       this.multipleSelection = row;
@@ -109,20 +108,18 @@ export default {
       let data = this.multipleSelection;
       if (data.length == 0 || data.length > 1)
         return this.$message.info("请选择一条数据");
-        this.get({
+      this.get({
         url: warehouse.gradeById + "/" + data[0].id,
-    })
-      .then((res) => {
-        this.form.value={...res.result,
+      }).then((res) => {
+        this.form.value = {
+          ...res.result,
           // warehouseName: res.result.warehouseId
-        }
-      this.form.requestData.flage = "update";
-      this.form.dialogFormVisible = true;
+        };
+        this.form.requestData.flage = "update";
+        this.form.dialogFormVisible = true;
       });
-
     },
 
-   
     // 创建
     create() {
       this.form.dialogFormVisible = true;
@@ -159,7 +156,7 @@ export default {
           });
         });
     },
-     // 导出按钮
+    // 导出按钮
     exprot() {
       // let timer = this.formSearchData.value.timer;
       // this.formSearchData.value.BeginInTime = timer ? timer[0] : "";
@@ -175,6 +172,29 @@ export default {
       }).then((res) => {
         this.fnexsl(res); //fnexsl封装的导出方法
       });
+    },
+    delete() {
+      let data = this.multipleSelection;
+      if (data.length != 1) return this.$message.info("请选择一条数据");
+      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.del({
+            url: warehouse.grade + "/" + data[0].id,
+          }).then((res) => {
+            this.getTable();
+            this.$message.success("删除成功");
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
     },
     // exprot(){},
     // 导入按钮
@@ -192,7 +212,7 @@ export default {
 
     // 导入库区按钮
     // importBtn() {
-          
+
     //   // this.UploadFrom.url =
     //   //   window.global_config.baseURL + Point.importPointArea;
     //   this.importform.dialogFormVisible = true;
@@ -205,11 +225,9 @@ export default {
     //     //     message: "已取消操作",
     //     //   });
 
-    
     // },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>

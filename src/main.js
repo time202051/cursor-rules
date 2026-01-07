@@ -30,10 +30,13 @@ import { SET_enumsSelect, Handle_Select } from "@/utils/setenumsSelect";
 Vue.prototype.SET_enumsSelect = SET_enumsSelect;
 Vue.prototype.Handle_Select = Handle_Select;
 import "@/utils/directives";
-import JsonViewer from 'vue-json-viewer'
-Vue.use(JsonViewer)
+import JsonViewer from "vue-json-viewer";
+Vue.use(JsonViewer);
 Vue.use(globleModule);
 import { get, post, del, put } from "@/api/request/sendRuest";
+import OlBaseComponents from "ol-base-components";
+Vue.use(OlBaseComponents);
+
 Vue.prototype.get = get;
 Vue.prototype.post = post;
 

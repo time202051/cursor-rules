@@ -128,6 +128,8 @@ import { validUsername } from "@/utils/validate";
 import SocialSign from "./components/SocialSignin";
 import { pickingScreen, Tenant, WebSystem, Login } from "@/api/request/swagger";
 import { JSEncrypt } from "jsencrypt";
+import { swaggerInstall } from "ol-base-components";
+
 export default {
   name: "Login",
   components: {
@@ -348,32 +350,40 @@ export default {
             var encryptor = new JSEncrypt();
             encryptor.setPublicKey(res.result?.xkeyList);
             // this.loginForm.password = encryptor.encrypt(this.loginForm.password); //加密密码
-            let OBJ = {...this.loginForm}
-            OBJ.password= encryptor.encrypt(this.loginForm.password)
-            this.$store.dispatch("user/login", OBJ)
+            let OBJ = { ...this.loginForm };
+            OBJ.password = encryptor.encrypt(this.loginForm.password);
+            this.$store
+              .dispatch("user/login", OBJ)
               .then(() => {
                 let data = JSON.parse(localStorage.getItem("wms"));
                 if (data.outTime) {
                   this.$message.warning("密码即将到期，请更改密码");
                 }
-                // this.$router.push({
-                //   path: this.redirect || "/",
-                //   query: this.otherQuery,
-                // });
-                if (this.workbenchCode) {
-                  // this.userbindwork()
-                  this.$router.push({
-                    path: "/pickingScreen",
-                    name: "拣选",
-                    query: {
-                      workbenchCode: this.workbenchCode,
-                    },
-                  });
-                } else {
-                  this.$store.state.tagsView.visitedViews = [];
-                  this.$router.push({ path: "/" });
-                  this.loading = false;
+                const isAbsolute = /^https?:\/\//i.test(
+                  window.global_config.baseURL
+                );
+                let tempUrl = window.global_config.baseURL;
+                if (!isAbsolute) {
+                  tempUrl = window.global_config.swaggerUrl;
                 }
+                swaggerInstall(`${tempUrl}/swagger/v1/swagger.json`).then(
+                  () => {
+                    if (this.workbenchCode) {
+                      // this.userbindwork()
+                      this.$router.push({
+                        path: "/pickingScreen",
+                        name: "拣选",
+                        query: {
+                          workbenchCode: this.workbenchCode,
+                        },
+                      });
+                    } else {
+                      this.$store.state.tagsView.visitedViews = [];
+                      this.$router.push({ path: "/" });
+                      this.loading = false;
+                    }
+                  }
+                );
               })
               .catch(() => {
                 this.loading = false;

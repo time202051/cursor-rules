@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { Basic } from "@/api/request/swagger";
+import { Basic, warehouse } from "@/api/request/swagger";
 import minxin from "./index.js";
 export default {
   name: "customerMasterFileManagement",
@@ -29,7 +29,6 @@ export default {
   mounted() {
     this.getTable();
     this.getSelect();
-
   },
   data() {
     return {
@@ -95,7 +94,7 @@ export default {
       this.form.dialogFormVisible = true;
       this.form.title = "编辑客户";
       this.form.value = {
-        PriorityLayer:data[0].priorityLayer,
+        PriorityLayer: data[0].priorityLayer,
         shipperCode: data[0].shipperCode,
         shipperName: data[0].shipperName,
         shipperSimpleName: data[0].shipperSimpleName,
@@ -117,7 +116,7 @@ export default {
       this.form.requestData.flage = "add";
       this.form.title = "新增客户";
       this.form.value = {
-        PriorityLayer:2,
+        PriorityLayer: 2,
         shipperCode: "",
         shipperName: "",
         shipperSimpleName: "",
@@ -149,6 +148,29 @@ export default {
       }).then((res) => {
         this.fnexsl(res); //fnexsl封装的导出方法
       });
+    },
+    delete() {
+      let data = this.multipleSelection;
+      if (data.length != 1) return this.$message.info("请选择一条数据");
+      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.del({
+            url: warehouse.shipper + "/" + data[0].id,
+          }).then((res) => {
+            this.getTable();
+            this.$message.success("删除成功");
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
     },
   },
 };

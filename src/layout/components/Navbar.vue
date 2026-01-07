@@ -81,6 +81,8 @@ import { enumsSelect } from "@/api/login/login";
 import { identity } from "@/api/request/swagger";
 import axios from "axios";
 import { Message } from "element-ui";
+import { swaggerUnload } from "ol-base-components";
+
 export default {
   components: {
     Breadcrumb,
@@ -232,6 +234,7 @@ export default {
       // this.Cookies.set("passwordPc",'')
       this.$router.push(`/login`);
       // this.$router.push(`/login?redirect=${this.$route.fullPath}`);
+      swaggerUnload();
     },
   },
 };

@@ -15,8 +15,8 @@
       @handleSizeChange="handleSizeChange"
       @handleindexChange="handleindexChange"
     >
-     <template slot="tsjList" slot-scope="scope">
-        <div>{{ scope.row.tsjList.join('、') }}</div>
+      <template slot="tsjList" slot-scope="scope">
+        <div>{{ scope.row.tsjList.join("、") }}</div>
       </template>
     </MyTable>
     <dialogTemplate :form="form"> </dialogTemplate>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { Basic } from "@/api/request/swagger";
+import { Basic, warehouse } from "@/api/request/swagger";
 import minxin from "./index.js";
 export default {
   name: "areaAasterFileManagement",
@@ -113,7 +113,7 @@ export default {
       this.form.dialogFormVisible = true;
       this.form.title = "编辑区域";
       this.form.value = {
-        regionCenter:data[0].regionCenter,
+        regionCenter: data[0].regionCenter,
         regionCode: data[0].regionCode,
         regionName: data[0].regionName,
         regionAttributes: data[0].regionAttributes,
@@ -129,7 +129,7 @@ export default {
       this.form.requestData.flage = "add";
       this.form.title = "新增区域";
       this.form.value = {
-        regionCenter:"",
+        regionCenter: "",
         regionCode: "",
         regionName: "",
         regionAttributes: "",
@@ -151,6 +151,29 @@ export default {
       }).then((res) => {
         this.fnexsl(res); //fnexsl封装的导出方法
       });
+    },
+    delete() {
+      let data = this.multipleSelection;
+      if (data.length != 1) return this.$message.info("请选择一条数据");
+      this.$confirm("此操作将永久删除该数据, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.del({
+            url: warehouse.region + "/" + data[0].id,
+          }).then((res) => {
+            this.getTable();
+            this.$message.success("删除成功");
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
     },
   },
 };

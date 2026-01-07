@@ -19,7 +19,10 @@
         <span style="color: #1682e6; cursor: pointer" @click="details(scope)">
           查看
         </span>
-         <span style="color: #1682e6; cursor: pointer;margin-left:10px" @click="pickDetails(scope)">
+        <span
+          style="color: #1682e6; cursor: pointer; margin-left: 10px"
+          @click="pickDetails(scope)"
+        >
           拣选任务
         </span>
       </template>
@@ -32,12 +35,13 @@
       ref="pickDetailsdialogTemplate"
       :form="pickDetailsform"
     ></pickDetailsdialogTemplate>
-    
+
     <dialogTemplate :form="adjustTimeForm"></dialogTemplate>
   </div>
 </template>
 <script>
 import { OutBound } from "@/api/request/swagger";
+import { getStockoutPickoutstock } from "@/api/modules";
 import minxin from "./index.js";
 import detailsdialogTemplate from "./from/details/index.vue";
 import pickDetailsdialogTemplate from "./from/pickDetails/index.vue";
@@ -45,7 +49,7 @@ import pickDetailsdialogTemplate from "./from/pickDetails/index.vue";
 export default {
   name: "CKOrderManagement",
   mixins: [minxin],
-  components: { detailsdialogTemplate ,pickDetailsdialogTemplate},
+  components: { detailsdialogTemplate, pickDetailsdialogTemplate },
   mounted() {
     this.getTable();
   },
@@ -74,7 +78,7 @@ export default {
         this.tableData.emptyImg = true;
       });
     },
-    ordAlloc(){
+    ordAlloc() {
       // 订单分配
       let data = this.multipleSelection;
       if (data.length == 0 || data.length > 1)
@@ -99,7 +103,7 @@ export default {
           });
         });
     },
-    manualFinishBtn(){
+    manualFinishBtn() {
       // 强制完成
       let data = this.multipleSelection;
       if (data.length == 0 || data.length > 1)
@@ -124,7 +128,7 @@ export default {
           });
         });
     },
-    pushTask(){
+    pushTask() {
       // 任务下发
       this.$confirm("是否任务下发?", "提示", {
         confirmButtonText: "确定",
@@ -146,7 +150,7 @@ export default {
           });
         });
     },
-    editBackupTime(){
+    editBackupTime() {
       // 调整备料时间
       let data = this.multipleSelection;
       if (data.length == 0 || data.length > 1)
@@ -188,7 +192,6 @@ export default {
       }, 10);
     },
     pickDetails(row) {
-      
       console.log(this.pickDetailsform);
       this.pickDetailsform.row = row.row;
       setTimeout(() => {
@@ -214,9 +217,9 @@ export default {
         this.fnexsl(res); //fnexsl封装的导出方法
       });
     },
-      //导出详情
+    //导出详情
     exportDetail() {
-       let query = this.formSearchData.value;
+      let query = this.formSearchData.value;
       query.BeginTime = query.timer?.[0];
       query.EndTime = query.timer?.[1];
       query.ArrivalBeginTime = query.arrivalTimer?.[0];
@@ -231,6 +234,23 @@ export default {
         }),
       }).then((res) => {
         this.fnexsl(res); //fnexsl封装的导出方法
+      });
+    },
+    //分配出库
+    outboundAllocationBtnHandler() {
+      let data = this.multipleSelection;
+      if (data.length != 1) return this.$message.info("请选择一条数据");
+      this.$confirm("确认分配出库?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(async () => {
+        const res = await getStockoutPickoutstock({ guid: data[0].id });
+        if (res.code != 200) return;
+        this.$message({
+          type: "success",
+          message: "删除成功!",
+        });
       });
     },
   },

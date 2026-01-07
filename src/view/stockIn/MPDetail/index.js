@@ -190,6 +190,13 @@ export default {
             show: true,
           },
           {
+            prop: "czWeight",
+            label: "重量",
+            minWidth: "200",
+            sortable: false,
+            show: true,
+          },
+          {
             prop: "remark",
             label: "明细备注",
             minWidth: "",

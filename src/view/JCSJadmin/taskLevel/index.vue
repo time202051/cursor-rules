@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import {  BusinessTask } from '@/api/request/swagger'
+import {  BusinessTask,warehouse } from '@/api/request/swagger'
 import minxin from './index.js'
 // import { getCurrentWeek } from '@/utils/getTime.js'
 // import { get3to3Days } from '@/utils/getTime.js'
